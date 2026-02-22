@@ -5,6 +5,7 @@
 
 suppressPackageStartupMessages({
   library(here)
+  library(ggplot2)
 })
 
 set.seed(1)
@@ -21,6 +22,9 @@ dir.create(DIR$cache, showWarnings = FALSE, recursive = TRUE)
 dir.create(DIR$res,   showWarnings = FALSE, recursive = TRUE)
 dir.create(DIR$fig,   showWarnings = FALSE, recursive = TRUE)
 dir.create(DIR$tab,   showWarnings = FALSE, recursive = TRUE)
+
+# consistent colors across plots
+PAL_GROUP <- c("Low"="#2C7BB6", "High"="#D7191C")
 
 save_plot <- function(p, filename, w=7, h=5, dpi=300){
   ggplot2::ggsave(file.path(DIR$fig, filename), plot=p, width=w, height=h, dpi=dpi)
