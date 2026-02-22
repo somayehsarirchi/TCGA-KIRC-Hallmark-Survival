@@ -1,115 +1,115 @@
 
-Molecular Hallmark–Based Survival Modeling in TCGA-KIRC
-Overview
+# TCGA-KIRC Hallmark Survival Modeling
 
-This repository implements a fully reproducible computational oncology pipeline for molecular risk stratification in TCGA Kidney Renal Clear Cell Carcinoma (KIRC).
+[![R](https://img.shields.io/badge/language-R-blue.svg)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]()
 
-The goal was to:
+## Overview
 
-Quantify Hallmark pathway activity using ssGSEA
+This repository implements a fully reproducible computational oncology pipeline for molecular risk stratification in **TCGA Kidney Renal Clear Cell Carcinoma (KIRC)**.
 
-Identify prognostic pathways via Cox regression
+The project integrates pathway-level activity scoring, survival modeling, validation, and downstream biological characterization.
 
-Build a regularized (LASSO) survival model
+---
 
-Construct a molecular risk score
+## Objectives
 
-Validate discrimination, calibration, and model assumptions
+- Quantify Hallmark pathway activity using **ssGSEA**
+- Identify prognostic pathways via **Cox regression**
+- Build a regularized (**LASSO**) survival model
+- Construct a molecular risk score
+- Validate discrimination, calibration, and proportional hazards assumptions
+- Characterize tumor biology using **DESeq2** and **GSEA**
 
-Characterize downstream tumor biology using DESeq2 and GSEA
+---
 
-Dataset
+## Dataset
 
-TCGA-KIRC (Primary Tumor samples)
+| Variable | Value |
+|----------|-------|
+| Cohort | TCGA-KIRC (Primary Tumor) |
+| Patients | 437 |
+| Events | 125 |
+| Median follow-up | ~1140 days |
+| RNA-Seq | STAR counts |
+| Clinical covariates | Age, AJCC stage |
 
-n = 437 patients
+Data accessed using `TCGAbiolinks`.
 
-Events = 125
+---
 
-Median follow-up ≈ 1140 days
-
-RNA-Seq: STAR counts
-
-Clinical covariates: age, AJCC stage
-
-Molecular Risk Model
+## Molecular Risk Model
 
 Adjusted Cox model:
-
 Surv(time, event) ~ pw_risk + age + stage
 
-Results:
+### Results
 
-Molecular risk HR = 2.61 (p = 2.1e-10)
+| Variable | HR | p-value |
+|----------|----|---------|
+| Molecular risk | 2.61 | 2.1e-10 |
+| Age | 1.038 | <1e-5 |
+| Stage (Late vs Early) | 2.72 | <1e-7 |
 
-Age HR = 1.038 (p < 1e-5)
-
-Stage (Late vs Early) HR = 2.72 (p < 1e-7)
-
-Concordance index (C-index) = 0.775
+**Concordance index (C-index): 0.775**
 
 The model demonstrates strong discrimination.
 
-Validation Strategy
+---
 
-✔ Train/Test split (70/30, no data leakage)
-✔ Time-dependent ROC (1y / 3y / 5y)
-✔ Bootstrap calibration (rms + PEC)
-✔ Proportional hazards testing (Schoenfeld residuals)
+## Validation Strategy
+
+✔ Train/Test split (70/30, no data leakage)  
+✔ Time-dependent ROC (1y / 3y / 5y)  
+✔ Bootstrap calibration (rms + PEC)  
+✔ Proportional hazards testing (Schoenfeld residuals)  
 ✔ LASSO feature selection stability (50 bootstrap resamples)
 
-Feature Stability
+---
 
-Consistently selected pathways (100% frequency):
+## Feature Stability
 
-HALLMARK_BILE_ACID_METABOLISM
+Pathways selected in 100% of bootstrap resamples:
 
-HALLMARK_UNFOLDED_PROTEIN_RESPONSE
+- HALLMARK_BILE_ACID_METABOLISM  
+- HALLMARK_UNFOLDED_PROTEIN_RESPONSE  
 
-Differential Expression Analysis
+---
+
+## Differential Expression Analysis
 
 High vs Low molecular risk comparison:
 
-Significant DEGs = 1965
+- Significant DEGs: **1965**
+- Adjusted for age and stage
+- Downstream Hallmark GSEA performed
 
-Adjusted for age and stage
+---
 
-Downstream Hallmark GSEA performed
+## Pipeline Overview
 
-Biological Insights
+![Workflow](results/figures/PANEL_workflow.png)
 
-Top prognostic hallmarks:
+---
 
-Unfolded Protein Response
+## Summary Panel
 
-G2M Checkpoint
+![Summary](results/FIGURE_SummaryPanel_Molecular.png)
 
-MYC Targets
+---
 
-E2F Targets
+## Reproducibility
 
-IL6–JAK–STAT3 signaling
+- All random seeds fixed
+- sessionInfo saved
+- Bootstrap validation included
+- Modular R scripts
+- MIT License
 
-These pathways reflect proliferative stress, oncogenic activation, and inflammatory signaling consistent with renal carcinoma biology.
+To run the full pipeline:
 
-Reproducibility
-
-All random seeds fixed
-
-sessionInfo saved
-
-Cached GDC query objects
-
-Fully scripted pipeline
-
-Bootstrap validation included
-
-Summary Panel
-
-<img width="2400" height="1600" alt="FIGURE_SummaryPanel_Molecular" src="https://github.com/user-attachments/assets/801be9e1-3156-479a-b829-26ca58ec423a" />
-
-
+```r
+source("scripts/run_all.R")
 Author
-
 Somayeh Sarirchi
 Computational Oncology / Bioinformatics
