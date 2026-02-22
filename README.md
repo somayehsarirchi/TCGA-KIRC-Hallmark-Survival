@@ -94,7 +94,7 @@ High vs Low molecular risk comparison:
 
 ## Summary Panel
 
-![Summary](results/FIGURE_SummaryPanel_Molecular.png)
+![Summary](results/figures/FIGURE_SummaryPanel_Molecular.png)
 
 ---
 
