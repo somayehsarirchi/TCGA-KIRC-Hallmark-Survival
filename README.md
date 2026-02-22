@@ -90,7 +90,7 @@ High vs Low molecular risk comparison:
 ![Workflow](results/figures/PANEL_workflow.png)
 
 ## Summary Panel
-![Summary](results/figures/FIGURE_SummaryPanel_Molecular.pngg)
+![Summary](results/figures/FIGURE_SummaryPanel_Molecular.png)
 ---
 
 ## Reproducibility
