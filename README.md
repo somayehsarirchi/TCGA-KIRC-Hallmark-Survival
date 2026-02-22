@@ -1,25 +1,31 @@
-
 # TCGA-KIRC Hallmark Survival Modeling
 
 [![R](https://img.shields.io/badge/language-R-blue.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]()
 
+---
+
 ## Overview
 
-This repository implements a fully reproducible computational oncology pipeline for molecular risk stratification in **TCGA Kidney Renal Clear Cell Carcinoma (KIRC)**.
+This repository presents a fully reproducible computational oncology pipeline for molecular risk stratification in TCGA Kidney Renal Clear Cell Carcinoma (KIRC).
 
-The project integrates pathway-level activity scoring, survival modeling, validation, and downstream biological characterization.
+The framework integrates pathway-level activity scoring, penalized survival modeling, internal validation, and biological characterization.
+
+The primary objective is to evaluate whether a Hallmark-derived molecular risk score provides independent prognostic value beyond established clinicopathological variables.
 
 ---
 
 ## Objectives
 
-- Quantify Hallmark pathway activity using **ssGSEA**
-- Identify prognostic pathways via **Cox regression**
-- Build a regularized (**LASSO**) survival model
-- Construct a molecular risk score
-- Validate discrimination, calibration, and proportional hazards assumptions
-- Characterize tumor biology using **DESeq2** and **GSEA**
+- Quantify Hallmark pathway activity using ssGSEA
+- Identify prognostic pathways via univariable Cox regression
+- Construct a molecular risk score using LASSO-regularized Cox modeling
+- Evaluate independent prognostic value adjusting for:
+  - Age
+  - AJCC stage
+  - Tumor grade
+- Assess model discrimination and calibration
+- Characterize downstream tumor biology using DESeq2 and GSEA
 
 ---
 
@@ -28,51 +34,73 @@ The project integrates pathway-level activity scoring, survival modeling, valida
 | Variable | Value |
 |----------|-------|
 | Cohort | TCGA-KIRC (Primary Tumor) |
-| Patients | 437 |
+| Initial patients | 437 |
+| Final analyzable cohort | 428 |
 | Events | 125 |
 | Median follow-up | ~1140 days |
 | RNA-Seq | STAR counts |
-| Clinical covariates | Age, AJCC stage |
+| Clinical covariates | Age, AJCC stage, Tumor grade |
 
-Data accessed using `TCGAbiolinks`.
+Data were accessed using TCGAbiolinks.
 
 ---
 
-## Molecular Risk Model
+## Multivariable Survival Model
 
-Adjusted Cox model:
-Surv(time, event) ~ pw_risk + age + stage
+Final adjusted Cox model:
+
+Surv(time, event) ~ pw_risk + age_years + stage_bin + grade_bin
 
 ### Results
 
-| Variable | HR | p-value |
-|----------|----|---------|
-| Molecular risk | 2.61 | 2.1e-10 |
-| Age | 1.038 | <1e-5 |
-| Stage (Late vs Early) | 2.72 | <1e-7 |
+| Variable | Hazard Ratio | 95% CI |
+|----------|--------------|--------|
+| Molecular risk score | 1.65 | 1.39 – 1.96 |
+| Age | 1.93 | 1.43 – 2.60 |
+| Stage (Late vs Early) | 2.40 | 1.64 – 3.53 |
+| Grade (High vs Low) | 1.50* | borderline |
 
-**Concordance index (C-index): 0.775**
-
-The model demonstrates strong discrimination.
+*Tumor grade showed borderline significance after adjustment for stage.
 
 ---
 
-## Validation Strategy
+## Model Performance
 
-✔ Train/Test split (70/30, no data leakage)  
-✔ Time-dependent ROC (1y / 3y / 5y)  
-✔ Bootstrap calibration (rms + PEC)  
-✔ Proportional hazards testing (Schoenfeld residuals)  
-✔ LASSO feature selection stability (50 bootstrap resamples)
+- Apparent C-index: ~0.77
+- Bootstrap optimism-corrected C-index: ~0.76
+- Calibration slope: 0.96
+- Minimal optimism (Δ ≈ 0.013)
+
+The molecular risk score remains independently associated with survival after full clinical adjustment.
+
+---
+
+## Time-Dependent Discrimination
+
+| Time | AUC |
+|------|------|
+| 1 year | 0.85 |
+| 3 years | 0.78 |
+| 5 years | 0.75 |
+
+---
+
+## Internal Validation Strategy
+
+- 500-bootstrap internal validation
+- Optimism-corrected discrimination (Dxy → C-index)
+- Calibration at 3 years
+- Proportional hazards testing
+- LASSO feature stability assessment
 
 ---
 
 ## Feature Stability
 
-Pathways selected in 100% of bootstrap resamples:
+Pathways consistently selected across bootstrap resamples:
 
-- HALLMARK_BILE_ACID_METABOLISM  
-- HALLMARK_UNFOLDED_PROTEIN_RESPONSE  
+- HALLMARK_BILE_ACID_METABOLISM
+- HALLMARK_UNFOLDED_PROTEIN_RESPONSE
 
 ---
 
@@ -80,31 +108,35 @@ Pathways selected in 100% of bootstrap resamples:
 
 High vs Low molecular risk comparison:
 
-- Significant DEGs: **1965**
+- Significant DEGs: 1965
 - Adjusted for age and stage
 - Downstream Hallmark GSEA performed
 
 ---
 
-## Pipeline Overview
-![Workflow](results/figures/PANEL_workflow.png)
+## Pipeline Structure
 
-## Summary Panel
-![Summary](results/figures/FIGURE_SummaryPanel_Molecular.png)
+data/
+scripts/
+results/
+
+To run the full analysis:
+
+source("scripts/run_all.R")
+
 ---
 
 ## Reproducibility
 
-- All random seeds fixed
+- Random seeds fixed
+- Bootstrap validation implemented
 - sessionInfo saved
-- Bootstrap validation included
-- Modular R scripts
+- No data leakage
 - MIT License
 
-To run the full pipeline:
+---
 
-```r
-source("scripts/run_all.R")
-Author
-Somayeh Sarirchi
+## Author
+
+Somayeh Sarirchi  
 Computational Oncology / Bioinformatics
