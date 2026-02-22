@@ -87,10 +87,10 @@ High vs Low molecular risk comparison:
 ---
 
 ## Pipeline Overview
-![Workflow](results/figures/PANEL_workflow_clean.png)
+![Workflow](results/figures/PANEL_workflow.png)
 
 ## Summary Panel
-![Summary](results/FIGURE_SummaryPanel_Molecular.png)
+![Summary](results/figures/FIGURE_SummaryPanel_Molecular.pngg)
 ---
 
 ## Reproducibility
