@@ -7,29 +7,37 @@ source("scripts/00_config.R")
 
 # ---- Logging ----
 log_file <- file.path(DIR$res, "pipeline_log.txt")
-dir.create(DIR$res, recursive = TRUE, showWarnings = FALSE)
+assert_dir(DIR$res)
 
 sink(log_file, split = TRUE)
+on.exit({ sink() }, add = TRUE)
+
 cat("===== PIPELINE START =====\n")
+cat("Project root:", DIR$root, "\n")
 cat("Start time:", format(Sys.time()), "\n\n")
 
 run_step <- function(script_path) {
   cat("--------------------------------------------------\n")
   cat("Running:", script_path, "\n")
-  cat("Time:", format(Sys.time()), "\n")
+  cat("Start:", format(Sys.time()), "\n")
   cat("--------------------------------------------------\n")
 
-  if (!file.exists(script_path)) {
-    stop("Script not found: ", script_path)
-  }
+  if (!file.exists(script_path)) stop("Script not found: ", script_path)
+
+  t0 <- Sys.time()
 
   tryCatch(
     {
-      source(script_path, local = new.env())
-      cat("✅ SUCCESS:", script_path, "\n\n")
+      # isolate each step in its own environment
+      sys.source(script_path, envir = new.env())
+      dt <- difftime(Sys.time(), t0, units = "secs")
+      cat("✅ SUCCESS:", script_path, "\n")
+      cat("Duration (sec):", round(as.numeric(dt), 2), "\n\n")
     },
     error = function(e) {
+      dt <- difftime(Sys.time(), t0, units = "secs")
       cat("❌ FAILED:", script_path, "\n")
+      cat("Duration (sec):", round(as.numeric(dt), 2), "\n")
       cat("Error message:\n", conditionMessage(e), "\n\n")
       stop(e)
     }
@@ -47,10 +55,8 @@ run_step("scripts/06_summary_panel.R")
 cat("===== PIPELINE END =====\n")
 cat("End time:", format(Sys.time()), "\n\n")
 
-# Extra: sessionInfo at end (even if step05 is skipped in future edits)
 cat("===== sessionInfo() =====\n")
 print(sessionInfo())
-
-sink()
+cat("\n")
 
 message("ALL DONE ✅  (log saved to: ", log_file, ")")
