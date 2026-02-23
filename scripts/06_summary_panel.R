@@ -45,7 +45,6 @@ panel_with_label <- function(img_grob, label) {
   )
 }
 
-# Optional: put a small note/caption instead of empty cell
 caption_grob <- function(text = "KIRC | Hallmark-based molecular risk model") {
   grobTree(
     rectGrob(gp = gpar(fill = "white", col = "grey90")),
@@ -68,7 +67,8 @@ paths <- list(
   B = file.path(fig_dir, "PANEL_volcano_labeled.png"),
   C = file.path(fig_dir, "PANEL_gsea_colored.png"),
   D = file.path(fig_dir, "KM_mgroup.png"),
-  E = file.path(fig_dir, "PANEL_timeROC.png")
+  E = file.path(fig_dir, "PANEL_timeROC.png"),
+  F = file.path(fig_dir, "PANEL_calibration.png")  # NEW
 )
 
 gA <- panel_with_label(read_png_grob_safe(paths$A), "A")
@@ -77,9 +77,15 @@ gC <- panel_with_label(read_png_grob_safe(paths$C), "C")
 gD <- panel_with_label(read_png_grob_safe(paths$D), "D")
 gE <- panel_with_label(read_png_grob_safe(paths$E), "E")
 
-# choose empty cell behavior:
-# g_empty <- nullGrob()
-g_empty <- caption_grob()
+# Panel F: prefer calibration; if missing, show caption (or placeholder)
+if (file.exists(paths$F)) {
+  gF <- panel_with_label(read_png_grob_safe(paths$F), "F")
+} else {
+  # choose fallback behavior:
+  # 1) caption (nicer than "missing file"), OR
+  # 2) placeholder from read_png_grob_safe(paths$F)
+  gF <- caption_grob("Calibration plot not available (run 07_rms_calibration.R)")
+}
 
 # ------------------------------
 # Layout: 2 columns x 3 rows
@@ -87,7 +93,7 @@ g_empty <- caption_grob()
 panel <- arrangeGrob(
   gA, gB,
   gC, gD,
-  gE, g_empty,
+  gE, gF,
   ncol = 2,
   heights = c(1, 1, 1),
   widths  = c(1, 1),
@@ -104,7 +110,6 @@ panel_final <- grobTree(
 # ------------------------------
 out_path <- file.path(DIR$res, "FIGURE_SummaryPanel_Molecular.png")
 
-# Cairo if available (better text rendering). If not, fallback.
 use_cairo <- capabilities("cairo")
 if (use_cairo) {
   png(out_path, width = 2400, height = 3000, res = 300, type = "cairo-png")
