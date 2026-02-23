@@ -50,6 +50,7 @@ run_step("scripts/02_ssgsea_scoring.R")
 run_step("scripts/03_survival_modeling.R")
 run_step("scripts/04_DEG_GSEA.R")
 run_step("scripts/05_validation.R")
+run_step("scripts/07_rms_calibration.R")
 run_step("scripts/06_summary_panel.R")
 
 cat("===== PIPELINE END =====\n")
