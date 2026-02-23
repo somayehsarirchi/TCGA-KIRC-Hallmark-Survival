@@ -47,3 +47,15 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+# ===============================
+# Project-specific ignores
+# ===============================
+
+# TCGA downloaded data
+GDCdata/
+
+# Cached intermediate objects
+data_cache/
+
+# Analysis outputs (reproducible)
+results/
