@@ -84,7 +84,7 @@ if (file.exists(paths$F)) {
   # choose fallback behavior:
   # 1) caption (nicer than "missing file"), OR
   # 2) placeholder from read_png_grob_safe(paths$F)
-  gF <- caption_grob("Calibration plot not available (run 07_rms_calibration.R)")
+  gF <- panel_with_label(read_png_grob_safe(paths$F), "F")
 }
 
 # ------------------------------
