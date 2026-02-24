@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+title: "TCGA-KIRC Hallmark-Based Survival Modeling Pipeline"
+message: "If you use this repository, please cite it as follows."
+type: software
+authors:
+  - family-names: "Sarirchi"
+    given-names: "Somayeh"
+    affiliation: "Independent Bioinformatics Researcher"
+    orcid: "0000-0002-2964-8447"
+version: 1.0.0
+date-released: 2026-02-24
+license: MIT
