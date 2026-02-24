@@ -229,12 +229,28 @@ Core packages:
 
 ------------------------------------------------------------------------
 
+## Methodological Strengths
+
+- No data leakage (feature selection restricted to training set)
+- Bootstrap validation (B = 500)
+- Calibration assessment (RMS)
+- Proportional hazards diagnostics
+- Penalized regression (glmnet)
+- Modular cache-aware design
+
+------------------------------------------------------------------------
+## Limitations
+
+- Internal validation only (no external cohort)
+- Based on TCGA bulk RNA-seq
+- Pathway-level abstraction may mask gene-level effects
+
+------------------------------------------------------------------------
 ## Author
 Somayeh Sarirchi\
 Bioinformatics & Translational Cancer Research\
 RNA-seq \| Survival Modeling \| Pathway Analysis \| Reproducible
 Pipelines
-
 ------------------------------------------------------------------------
 
 If using this workflow structure academically, please cite TCGA and
