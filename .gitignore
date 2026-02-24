@@ -1,3 +1,7 @@
+# ===============================
+# R / RStudio
+# ===============================
+
 # History files
 .Rhistory
 .Rapp.history
@@ -25,12 +29,12 @@
 vignettes/*.html
 vignettes/*.pdf
 
-# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
+# OAuth2 token
 .httr-oauth
 
-# knitr and R markdown default cache directories
+# knitr and R markdown cache directories
 *_cache/
-/cache/
+cache/
 
 # Temporary files created by R markdown
 *.utf8.md
@@ -47,6 +51,7 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
 # ===============================
 # Project-specific ignores
 # ===============================
@@ -54,8 +59,19 @@ rsconnect/
 # TCGA downloaded data
 GDCdata/
 
+
 # Cached intermediate objects
 cache/
 
-# Analysis outputs (reproducible)
+# Binary R objects (usually large / non-portable)
+*.rds
+*.RDS
+*.rda
+*.RData
+
+# Logs
+logs/
+*.log
+
+# Outputs (figures/tables created by pipeline)
 results/
