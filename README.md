@@ -1,5 +1,5 @@
 # TCGA-KIRC Hallmark-Based Survival Modeling Pipeline
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18761184.svg)](https://doi.org/10.5281/zenodo.18761184)
 ![R](https://img.shields.io/badge/R-%3E%3D4.2-blue)
 ![Status](https://img.shields.io/badge/status-reproducible-success)
 ![Validation](https://img.shields.io/badge/validation-bootstrap%20%2B%20train%2Ftest-orange)
