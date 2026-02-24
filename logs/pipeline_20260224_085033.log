@@ -1,0 +1,23 @@
+[2026-02-24 08:50:33] [INFO] Project root: C:/Users/asus/Desktop/TCGA-KIRC-Hallmark-Survival 
+[2026-02-24 08:50:33] [INFO] force=FALSE use_pec_calibration=TRUE use_rms_calibration=TRUE run_train_test=TRUE 
+[2026-02-24 08:50:33] [INFO] ---- STEP: 01_gdc ---- 
+[2026-02-24 08:50:33] [INFO] Cache hit. Skipping build. 
+[2026-02-24 08:50:33] [INFO] ---- STEP: 02_preprocess ---- 
+[2026-02-24 08:50:33] [INFO] Cache hit. Skipping build. 
+[2026-02-24 08:50:33] [INFO] ---- STEP: 03_vst_symbol ---- 
+[2026-02-24 08:50:33] [INFO] Cache hit. Skipping build. 
+[2026-02-24 08:50:33] [INFO] ---- STEP: 04_ssgsea ---- 
+[2026-02-24 08:50:33] [INFO] Cache hit. Skipping build. 
+[2026-02-24 08:50:33] [INFO] ---- STEP: 05_uni_cox ---- 
+[2026-02-24 08:50:33] [INFO] Cache hit. Skipping build. 
+[2026-02-24 08:50:34] [INFO] ---- STEP: 06_lasso_risk ---- 
+[2026-02-24 08:50:34] [INFO] Cache hit. Skipping build. 
+[2026-02-24 08:50:34] [INFO] ---- STEP: 07_deseq2_gsea ---- 
+[2026-02-24 08:50:34] [INFO] Cache hit. Skipping build. 
+[2026-02-24 08:50:34] [INFO] ---- STEP: 08_eval_panels ---- 
+[2026-02-24 08:50:34] [INFO] Cache miss (or force=TRUE). Building... 
+[2026-02-24 08:50:34] [INFO] Loaded: C:/Users/asus/Desktop/TCGA-KIRC-Hallmark-Survival/cache/06_lasso/meta2_risk.rds 
+[2026-02-24 08:50:34] [INFO] Loaded: C:/Users/asus/Desktop/TCGA-KIRC-Hallmark-Survival/cache/04_scores/hall_df.rds 
+[2026-02-24 08:50:34] [INFO] Loaded: C:/Users/asus/Desktop/TCGA-KIRC-Hallmark-Survival/cache/05_unicox/top5.rds 
+[2026-02-24 08:50:34] [INFO] Loaded: C:/Users/asus/Desktop/TCGA-KIRC-Hallmark-Survival/cache/06_lasso/cv_pw.rds 
+[2026-02-24 08:50:43] [ERROR] ❌ Pipeline failed: dataset dd not found for options(datadist=) 

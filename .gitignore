@@ -55,7 +55,7 @@ rsconnect/
 GDCdata/
 
 # Cached intermediate objects
-data_cache/
+cache/
 
 # Analysis outputs (reproducible)
 results/
