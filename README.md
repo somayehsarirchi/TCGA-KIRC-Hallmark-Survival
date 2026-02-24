@@ -223,7 +223,7 @@ survminer - timeROC - rms - pec - ggplot2 - dplyr
 ------------------------------------------------------------------------
 
 ## Author
-Somayeh Sarirchi
+Somayeh Sarirchi\
 Bioinformatics & Translational Cancer Research\
 RNA-seq \| Survival Modeling \| Pathway Analysis \| Reproducible
 Pipelines
