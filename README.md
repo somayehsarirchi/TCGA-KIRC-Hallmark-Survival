@@ -259,16 +259,16 @@ R ≥ 4.2
 
 Core packages:
 
-TCGAbiolinks
-DESeq2
-GSVA
-glmnet
-survival
-timeROC
-rms
-pec
-ggplot2
-dplyr
+TCGAbiolinks\
+DESeq2\
+GSVA\
+glmnet\
+survival\
+timeROC\
+rms\
+pec\
+ggplot2\
+dplyr\
 
 ------------------------------------------------------------------------
 
